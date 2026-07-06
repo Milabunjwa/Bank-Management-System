@@ -1,5 +1,6 @@
 import models.Account;
 import models.Customer;
+import models.Transaction;
 import services.BankService;
 
 public class Main {
@@ -26,6 +27,29 @@ public class Main {
 
         for (Account account : bank.getAccounts()) {
             System.out.println(account);
+        }
+
+        bank.deposit("A001", 1000);
+
+        bank.withdraw("A001", 250);
+
+        bank.transfer(
+                "A001",
+                "A002",
+                300
+        );
+
+        System.out.println();
+
+        for (Account account : bank.getAccounts()) {
+
+            System.out.println(account);
+
+            for (Transaction transaction : account.getTransactions()) {
+                System.out.println("   " + transaction);
+            }
+
+            System.out.println();
         }
     }
 }
