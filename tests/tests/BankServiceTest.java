@@ -260,4 +260,30 @@ public class BankServiceTest {
 
         assertTrue(file.exists());
     }
+
+    @Test
+    public void testLoadCustomers() {
+
+        BankService bank = new BankService();
+
+        bank.loadCustomers();
+
+        assertNotNull(
+                bank.getCustomers()
+        );
+
+    }
+
+    @Test
+    public void testLoadAccounts() {
+
+        BankService bank = new BankService();
+
+        bank.loadAccounts();
+
+        assertNotNull(
+                bank.getAccounts()
+        );
+
+    }
 }

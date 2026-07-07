@@ -16,6 +16,9 @@ public class BankService {
     public BankService() {
         customers = new ArrayList<>();
         accounts = new ArrayList<>();
+
+        loadCustomers();
+        loadAccounts();
     }
 
     public void addCustomer(String id, String name) {
@@ -184,6 +187,113 @@ public class BankService {
                 "data/accounts.json",
                 json.toString()
         );
+
+    }
+
+    public void loadCustomers() {
+
+        String json =
+                FileManager.load(
+                        "data/customers.json"
+                );
+
+        if (json.isEmpty()) {
+            return;
+        }
+
+        json = json.replace("[", "")
+                .replace("]", "")
+                .replace("{", "")
+                .replace("}", "")
+                .replace("\"", "");
+
+        String[] objects = json.split(",");
+
+        String id = "";
+        String name = "";
+
+        for (String line : objects) {
+
+            line = line.trim();
+
+            if (line.startsWith("id:")) {
+
+                id = line.substring(3).trim();
+
+            }
+
+            if (line.startsWith("name:")) {
+
+                name = line.substring(5).trim();
+
+                customers.add(
+                        new Customer(
+                                id,
+                                name
+                        )
+                );
+
+            }
+
+        }
+
+    }
+
+    public void loadAccounts() {
+
+        String json =
+                FileManager.load(
+                        "data/accounts.json"
+                );
+
+        if (json.isEmpty()) {
+            return;
+        }
+
+        json = json.replace("[", "")
+                .replace("]", "")
+                .replace("{", "")
+                .replace("}", "")
+                .replace("\"", "");
+
+        String[] objects = json.split(",");
+
+        String accountNumber = "";
+        String customerId = "";
+
+        for (String line : objects) {
+
+            line = line.trim();
+
+            if (line.startsWith("accountNumber:")) {
+
+                accountNumber =
+                        line.substring(14).trim();
+
+            }
+
+            if (line.startsWith("customerId:")) {
+
+                customerId =
+                        line.substring(11).trim();
+
+                Customer customer =
+                        findCustomer(customerId);
+
+                if (customer != null) {
+
+                    accounts.add(
+                            new Account(
+                                    accountNumber,
+                                    customer
+                            )
+                    );
+
+                }
+
+            }
+
+        }
 
     }
 
