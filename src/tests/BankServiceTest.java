@@ -164,4 +164,27 @@ public class BankServiceTest {
                         .size()
         );
     }
+
+    @Test
+    public void testFindExistingAccount() {
+
+        BankService bank = new BankService();
+
+        bank.addCustomer("C001", "Mila");
+        bank.addAccount("A001", "C001");
+
+        assertNotNull(
+                bank.findAccount("A001")
+        );
+    }
+
+    @Test
+    public void testFindMissingAccount() {
+
+        BankService bank = new BankService();
+
+        assertNull(
+                bank.findAccount("A999")
+        );
+    }
 }
