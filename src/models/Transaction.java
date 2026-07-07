@@ -10,11 +10,9 @@ public class Transaction {
     private LocalDateTime timestamp;
 
     public Transaction(String type, double amount) {
-
         this.type = type;
         this.amount = amount;
         this.timestamp = LocalDateTime.now();
-
     }
 
     public String getType() {

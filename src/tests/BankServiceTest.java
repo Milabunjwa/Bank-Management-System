@@ -205,4 +205,31 @@ public class BankServiceTest {
                         .getTimestamp()
         );
     }
+    @Test
+    public void testTransactionTimestamp() {
+
+        BankService bank = new BankService();
+
+        bank.addCustomer(
+                "C001",
+                "Mila"
+        );
+
+        bank.addAccount(
+                "A001",
+                "C001"
+        );
+
+        bank.deposit(
+                "A001",
+                100
+        );
+
+        assertNotNull(
+                bank.findAccount("A001")
+                        .getTransactions()
+                        .get(0)
+                        .getTimestamp()
+        );
+    }
 }
