@@ -1,5 +1,9 @@
 package tests;
 
+import org.junit.jupiter.api.BeforeEach;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import org.junit.jupiter.api.Test;
 import services.BankService;
 
@@ -8,6 +12,22 @@ import java.io.File;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BankServiceTest {
+
+    @BeforeEach
+    public void setUp() throws IOException {
+
+        FileWriter customerWriter =
+                new FileWriter("data/customers.json");
+
+        customerWriter.write("[]");
+        customerWriter.close();
+
+        FileWriter accountWriter =
+                new FileWriter("data/accounts.json");
+
+        accountWriter.write("[]");
+        accountWriter.close();
+    }
 
     @Test
     public void testAddCustomer() {
@@ -285,5 +305,139 @@ public class BankServiceTest {
                 bank.getAccounts()
         );
 
+    }
+
+    @Test
+    public void testDuplicateCustomer() {
+
+        BankService bank = new BankService();
+
+        assertTrue(
+                bank.addCustomer(
+                        "C001",
+                        "Mila"
+                )
+        );
+
+        assertFalse(
+                bank.addCustomer(
+                        "C001",
+                        "John"
+                )
+        );
+    }
+
+    @Test
+    public void testDuplicateAccount() {
+
+        BankService bank = new BankService();
+
+        bank.addCustomer(
+                "C001",
+                "Mila"
+        );
+
+        assertTrue(
+                bank.addAccount(
+                        "A001",
+                        "C001"
+                )
+        );
+
+        assertFalse(
+                bank.addAccount(
+                        "A001",
+                        "C001"
+                )
+        );
+    }
+
+    @Test
+    public void testDepositZero() {
+
+        BankService bank = new BankService();
+
+        bank.addCustomer(
+                "C001",
+                "Mila"
+        );
+
+        bank.addAccount(
+                "A001",
+                "C001"
+        );
+
+        assertFalse(
+                bank.deposit(
+                        "A001",
+                        0
+                )
+        );
+    }
+
+    @Test
+    public void testNegativeDeposit() {
+
+        BankService bank = new BankService();
+
+        bank.addCustomer(
+                "C001",
+                "Mila"
+        );
+
+        bank.addAccount(
+                "A001",
+                "C001"
+        );
+
+        assertFalse(
+                bank.deposit(
+                        "A001",
+                        -50
+                )
+        );
+    }
+
+    @Test
+    public void testWithdrawZero() {
+
+        BankService bank = new BankService();
+
+        bank.addCustomer(
+                "C001",
+                "Mila"
+        );
+
+        bank.addAccount(
+                "A001",
+                "C001"
+        );
+
+        assertFalse(
+                bank.withdraw(
+                        "A001",
+                        0
+                )
+        );
+    }
+
+    @Test
+    public void testNegativeTransfer() {
+
+        BankService bank = new BankService();
+
+        bank.addCustomer("C001", "Mila");
+        bank.addCustomer("C002", "John");
+
+        bank.addAccount("A001", "C001");
+        bank.addAccount("A002", "C002");
+
+        assertFalse(
+                bank.transfer(
+                        "A001",
+                        "A002",
+                        -100
+                )
+        );
     }
 }

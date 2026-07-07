@@ -21,19 +21,54 @@ public class BankService {
         loadAccounts();
     }
 
-    public void addCustomer(String id, String name) {
+    public boolean addCustomer(String id, String name) {
+        if (id == null || id.isBlank()) {
+            return false;
+        }
+
+        if (name == null || name.isBlank()) {
+            return false;
+        }
+
+        if (findCustomer(id) != null) {
+            return false;
+        }
+
         customers.add(new Customer(id, name));
+
         saveCustomers();
+
+        return true;
     }
 
-    public void addAccount(String accountNumber, String customerId) {
+    public boolean addAccount(String accountNumber, String customerId) {
 
-        Customer customer = findCustomer(customerId);
-
-        if (customer != null) {
-            accounts.add(new Account(accountNumber, customer));
+        if (accountNumber == null ||
+                accountNumber.isBlank()) {
+            return false;
         }
+
+        if (findAccount(accountNumber) != null) {
+            return false;
+        }
+
+        Customer customer =
+                findCustomer(customerId);
+
+        if (customer == null) {
+            return false;
+        }
+
+        accounts.add(
+                new Account(
+                        accountNumber,
+                        customer
+                )
+        );
+
         saveAccounts();
+
+        return true;
     }
 
     public Customer findCustomer(String id) {
@@ -77,9 +112,7 @@ public class BankService {
             return false;
         }
 
-        account.deposit(amount);
-
-        return true;
+        return account.deposit(amount);
     }
 
     public boolean withdraw(String accountNumber, double amount) {
@@ -96,6 +129,9 @@ public class BankService {
     public boolean transfer(String fromAccount,
                             String toAccount,
                             double amount) {
+        if (amount <= 0) {
+            return false;
+        }
 
         Account sender = findAccount(fromAccount);
         Account receiver = findAccount(toAccount);
