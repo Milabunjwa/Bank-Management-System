@@ -1,152 +1,190 @@
 # Bank Management System
 
-A console-based Bank Management System built in Java that allows users to manage customers, bank accounts, transactions, and account operations. The project demonstrates object-oriented programming principles, clean code practices, and incremental feature development.
+A Java console application that simulates a simple banking system.
+
+This project demonstrates object-oriented programming principles including encapsulation, composition, collections, file persistence, and unit testing.
 
 ---
 
 ## Features
 
-### Current Features
-- Create new customers
+### Customer Management
+
+- Create customers
+- Search customers by ID
+- Store customer information
+
+### Account Management
+
 - Create bank accounts
-- View customer accounts
+- Link accounts to customers
+- Search accounts
+
+### Banking Operations
+
 - Deposit money
 - Withdraw money
-- Transfer funds between accounts
-- Record transaction history
-- Search customers and accounts
-- Input validation
-- Unit testing
+- Transfer money between accounts
 
-### Planned Features
-- JSON data persistence
-- Load saved banking data
-- Account statements
-- Savings and Current account types
-- Custom exceptions
-- Reporting
-- Improved documentation
+### Transaction History
+
+Each account records:
+
+- Deposits
+- Withdrawals
+
+### Data Persistence
+
+Customer and account information is saved to JSON files and automatically loaded when the application starts.
+
+### Validation
+
+The system prevents:
+
+- Duplicate customer IDs
+- Duplicate account numbers
+- Empty names
+- Empty account numbers
+- Invalid deposits
+- Invalid withdrawals
+- Invalid transfers
+- Withdrawals exceeding available balance
+
+### Unit Testing
+
+JUnit tests verify:
+
+- Customer creation
+- Account creation
+- Deposits
+- Withdrawals
+- Transfers
+- Validation
+- Transaction history
+- Data persistence
 
 ---
 
-## Project Structure
+# Technologies
+
+- Java
+- IntelliJ IDEA
+- JUnit 5
+- JSON (manual serialization)
+- Git
+- GitHub
+
+---
+
+# Project Structure
 
 ```
-Bank-Management-System/
+Bank-Management-System
 │
-├── src/
-│   ├── Main.java
-│   ├── models/
-│   │   ├── Account.java
-│   │   ├── Customer.java
-│   │   ├── SavingsAccount.java
-│   │   ├── CurrentAccount.java
-│   │   └── Transaction.java
+├── src
+│   ├── models
+│   │     Account.java
+│   │     Customer.java
+│   │     Transaction.java
 │   │
-│   ├── services/
-│   │   └── BankService.java
+│   ├── services
+│   │     BankService.java
+│   │     FileManager.java
 │   │
-│   ├── exceptions/
-│   │   └── InsufficientFundsException.java
-│   │
-│   └── utils/
-│       └── InputValidator.java
+│   └── Main.java
 │
-├── test/
-│   └── BankServiceTest.java
+├── tests
+│      BankServiceTest.java
+│
+├── data
+│      customers.json
+│      accounts.json
 │
 └── README.md
 ```
 
 ---
 
-## Technologies
+# Running the Project
 
-- Java
-- Object-Oriented Programming (OOP)
-- Collections Framework
-- Exception Handling
-- JUnit
-- IntelliJ IDEA
-- Git & GitHub
+1. Clone the repository
+
+```
+git clone https://github.com/YourUsername/Bank-Management-System.git
+```
+
+2. Open the project in IntelliJ IDEA.
+
+3. Run:
+
+```
+Main.java
+```
 
 ---
 
-## Concepts Demonstrated
+# Running Tests
 
+Run:
+
+```
+BankServiceTest.java
+```
+
+using IntelliJ's JUnit runner.
+
+---
+
+# Example Output
+
+```
+Customers
+
+C001 - Mila
+C002 - John
+
+Accounts
+
+A001 | Mila | Balance: R450.0
+
+Deposit : R1000.0
+Withdrawal : R250.0
+Withdrawal : R300.0
+
+A002 | John | Balance: R300.0
+
+Deposit : R300.0
+```
+
+---
+
+# Future Improvements
+
+- Interest calculations
+- Multiple account types
+- User login system
+- PIN authentication
+- Monthly bank statements
+- Better JSON handling using Jackson or Gson
+- Database integration (MySQL or PostgreSQL)
+- JavaFX graphical interface
+
+---
+
+# Concepts Demonstrated
+
+- Classes
+- Objects
 - Encapsulation
-- Inheritance
-- Polymorphism
 - Composition
-- Object Relationships
-- Collections (ArrayList, HashMap)
-- File Handling
-- Unit Testing
-- Input Validation
-- Exception Handling
-
----
-
-## Getting Started
-
-### Clone the repository
-
-```bash
-git clone git@github.com:Milabunjwa/Bank-Management-System.git
-```
-
-### Navigate to the project
-
-```bash
-cd Bank-Management-System
-```
-
-### Compile
-
-```bash
-javac src/**/*.java
-```
-
-### Run
-
-```bash
-java Main
-```
-
----
-
-## Development Roadmap
-
-- [x] Customer management
-- [x] Account creation
-- [ ] Deposits
-- [ ] Withdrawals
-- [ ] Fund transfers
-- [ ] Transaction history
-- [ ] Account search
-- [ ] JSON persistence
-- [ ] Data loading
-- [ ] Monthly statements
-- [ ] Custom exceptions
-- [ ] Reporting
-
----
-
-## Testing
-
-Unit tests are written using **JUnit** to verify the correctness of the banking operations, customer management, validation, and transaction handling.
-
----
-
-## Future Improvements
-
-- Graphical User Interface (JavaFX)
-- Database integration (MySQL/PostgreSQL)
-- Authentication and login
-- Interest calculation
-- Scheduled payments
-- Transaction filtering
-- REST API
+- ArrayLists
+- Searching
+- Validation
+- File handling
+- JSON persistence
+- Unit testing
+- Clean code
+- Object-oriented programming
 
 ---
 
@@ -154,4 +192,6 @@ Unit tests are written using **JUnit** to verify the correctness of the banking 
 
 **Mila Bunjwa**
 
-GitHub: https://github.com/Milabunjwa
+Software Development Student at WeThinkCode
+
+Aspiring Java Backend Developer
