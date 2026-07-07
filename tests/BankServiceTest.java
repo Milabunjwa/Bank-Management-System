@@ -3,6 +3,8 @@ package tests;
 import org.junit.jupiter.api.Test;
 import services.BankService;
 
+import java.io.File;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BankServiceTest {
@@ -231,5 +233,31 @@ public class BankServiceTest {
                         .get(0)
                         .getTimestamp()
         );
+    }
+
+    @Test
+    public void testCustomersJsonCreated() {
+
+        BankService bank = new BankService();
+
+        bank.addCustomer("C001", "Mila");
+
+        File file = new File("data/customers.json");
+
+        assertTrue(file.exists());
+    }
+
+    @Test
+    public void testAccountsJsonCreated() {
+
+        BankService bank = new BankService();
+
+        bank.addCustomer("C001", "Mila");
+
+        bank.addAccount("A001", "C001");
+
+        File file = new File("data/accounts.json");
+
+        assertTrue(file.exists());
     }
 }

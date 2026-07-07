@@ -1,4 +1,7 @@
 package services;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import models.Account;
 import models.Customer;
@@ -17,6 +20,7 @@ public class BankService {
 
     public void addCustomer(String id, String name) {
         customers.add(new Customer(id, name));
+        saveCustomers();
     }
 
     public void addAccount(String accountNumber, String customerId) {
@@ -26,6 +30,7 @@ public class BankService {
         if (customer != null) {
             accounts.add(new Account(accountNumber, customer));
         }
+        saveAccounts();
     }
 
     public Customer findCustomer(String id) {
@@ -103,6 +108,83 @@ public class BankService {
         receiver.deposit(amount);
 
         return true;
+    }
+
+    public void saveCustomers() {
+
+        StringBuilder json = new StringBuilder();
+
+        json.append("[\n");
+
+        for (int i = 0; i < customers.size(); i++) {
+
+            Customer customer = customers.get(i);
+
+            json.append("  {\n");
+            json.append("    \"id\": \"")
+                    .append(customer.getCustomerId())
+                    .append("\",\n");
+
+            json.append("    \"name\": \"")
+                    .append(customer.getName())
+                    .append("\"\n");
+
+            json.append("  }");
+
+            if (i < customers.size() - 1) {
+                json.append(",");
+            }
+
+            json.append("\n");
+
+        }
+
+        json.append("]");
+
+        FileManager.save(
+                "data/customers.json",
+                json.toString()
+        );
+
+    }
+
+    public void saveAccounts() {
+
+        StringBuilder json = new StringBuilder();
+
+        json.append("[\n");
+
+        for (int i = 0; i < accounts.size(); i++) {
+
+            Account account = accounts.get(i);
+
+            json.append("  {\n");
+
+            json.append("    \"accountNumber\": \"")
+                    .append(account.getAccountNumber())
+                    .append("\",\n");
+
+            json.append("    \"customerId\": \"")
+                    .append(account.getCustomer().getCustomerId())
+                    .append("\"\n");
+
+            json.append("  }");
+
+            if (i < accounts.size() - 1) {
+                json.append(",");
+            }
+
+            json.append("\n");
+
+        }
+
+        json.append("]");
+
+        FileManager.save(
+                "data/accounts.json",
+                json.toString()
+        );
+
     }
 
 

@@ -1,0 +1,10 @@
+[
+  {
+    "accountNumber": "A001",
+    "customerId": "C001"
+  },
+  {
+    "accountNumber": "A002",
+    "customerId": "C002"
+  }
+]
